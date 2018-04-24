@@ -2,18 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RingFlatform : MonoBehaviour {
+public class RingFlatform : ActivePlatform {
+
     public GameObject[] ob_array;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         ob_array = new GameObject[this.transform.childCount];
         for (int i = 0; i < ob_array.Length; ++i)
             ob_array[i] = this.transform.GetChild(i).gameObject;
     }
-    private void Start()
+
+    public override void Active()
     {
         StartCoroutine("Movement");
+    }
+    public override void Deactive()
+    {
+        StopCoroutine("Movement");
     }
 
     IEnumerator Movement()
@@ -42,4 +49,7 @@ public class RingFlatform : MonoBehaviour {
             }
         }
     }
+
+    protected override void OnCollisionExit(Collision collision){}
+    protected override void OnCollisionStay(Collision collision){}
 }

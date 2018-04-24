@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlatformController : MonoBehaviour {
 
-    List<Flatform> flatforms;
+    List<Platform> flatforms;
 
 	void Start () {
 		
