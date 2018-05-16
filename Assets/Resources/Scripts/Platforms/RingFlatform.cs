@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RingFlatform : ActivePlatform {
+public class RingFlatform : Platform {
 
     public GameObject[] ob_array;
+    public bool stop;
 
     protected override void Awake()
     {
@@ -16,17 +17,22 @@ public class RingFlatform : ActivePlatform {
 
     public override void Active()
     {
+        base.Active();
         StartCoroutine("Movement");
     }
     public override void Deactive()
     {
-        StopCoroutine("Movement");
+        base.Deactive();
+        stop = true;
+        //움직임 단위를 수행중인 중간에 멈추면 문제가 생기기 때문에
+        //플레그를 이용해서 반복을 중지시키는 형태로 구현했다.
     }
 
     IEnumerator Movement()
     {
-        while (true)
+        while (! stop)
         {
+            //Array상 다음 Index의 플랫폼 위치를 목표로 설정한다.
             Vector3[] targetPos = new Vector3[ob_array.Length];
             for (int i = 0; i < ob_array.Length; ++i)
             {
@@ -39,6 +45,8 @@ public class RingFlatform : ActivePlatform {
                     targetPos[i] = ob_array[i + 1].transform.position;
                 }
             }
+
+            //목표지점까지 이동시킨다.
             while (ob_array[0].transform.position != targetPos[0])
             {
                 for (int i = 0; i < ob_array.Length; ++i)
@@ -48,8 +56,6 @@ public class RingFlatform : ActivePlatform {
                 yield return null;
             }
         }
+        stop = false;
     }
-
-    protected override void OnCollisionExit(Collision collision){}
-    protected override void OnCollisionStay(Collision collision){}
 }

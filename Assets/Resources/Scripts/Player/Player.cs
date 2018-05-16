@@ -13,4 +13,20 @@ public class Player : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.tag.Equals("Platform"))
+        {
+            this.transform.parent = collision.transform;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.tag.Equals("Platform"))
+        {
+            this.transform.parent = null;
+        }
+    }
 }
