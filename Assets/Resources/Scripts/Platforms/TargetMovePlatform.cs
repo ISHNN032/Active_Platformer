@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TargetMovePlatform : Platform
 {
-    [SerializeField] [Range(1, 10)] private float Speed_Set;
+    [SerializeField] [Range(0.1f, 5)] private float Speed_Set;
     public Transform targetTransform;
 
     private Vector3 target;

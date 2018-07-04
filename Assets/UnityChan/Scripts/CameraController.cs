@@ -10,11 +10,7 @@
 //Change : Add the operation for Mac
 //
 
-
-
-
 using UnityEngine;
-using System.Collections;
 
 namespace CameraController
 {
